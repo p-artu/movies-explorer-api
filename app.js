@@ -14,6 +14,8 @@ const limiter = rateLimit({
   max: 10000,
 });
 const allowlist = [
+  'https://p-artu.movies-explorer.nomoredomains.club',
+  'http://p-artu.movies-explorer.nomoredomains.club',
   'http://localhost:3000',
 ];
 function corsOptionsDelegate(req, callback) {
