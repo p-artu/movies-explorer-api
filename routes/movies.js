@@ -6,13 +6,14 @@ const {
   createMovie,
   deleteMovie,
 } = require('../controllers/movies');
+const { URL_VALID_ERR } = require('../utils/constants');
 
 const method = (v) => {
   const result = validator.isURL(v);
   if (result) {
     return v;
   }
-  throw new Error('Неправильный формат ссылки');
+  throw new Error(URL_VALID_ERR);
 };
 
 router.get('/movies', getMovies);

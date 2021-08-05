@@ -4,8 +4,11 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 const MongoError = require('../errors/mongo-err');
+const {
+  INCORRECT_ERR, USER_NOT_FOUND_ERR, EMAIL_BUSY_ERR, SECRET_KEY,
+} = require('../utils/constants');
 
-const { NODE_ENV, JWT_SECRET = 'super-strong-secret' } = process.env;
+const { NODE_ENV, JWT_SECRET = SECRET_KEY } = process.env;
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -16,9 +19,9 @@ module.exports.getUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.message === 'NotFound') {
-        throw new NotFoundError('Пользователь не найден');
+        throw new NotFoundError(USER_NOT_FOUND_ERR);
       } else if (err.name === 'CastError') {
-        throw new BadRequestError('Указаны некоректные данные');
+        throw new BadRequestError(INCORRECT_ERR);
       }
     })
     .catch(next);
@@ -41,11 +44,11 @@ module.exports.updateUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.message === 'NotFound') {
-        throw new NotFoundError('Пользователь не найден');
+        throw new NotFoundError(USER_NOT_FOUND_ERR);
       } else if (err.name === 'ValidationError' || err.name === 'CastError') {
-        throw new BadRequestError('Указаны некоректные данные');
+        throw new BadRequestError(INCORRECT_ERR);
       } else if (err.name === 'MongoError' && err.code === 11000) {
-        throw new MongoError('Указанный email занят');
+        throw new MongoError(EMAIL_BUSY_ERR);
       }
     })
     .catch(next);
@@ -57,7 +60,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret',
+        NODE_ENV === 'production' ? JWT_SECRET : SECRET_KEY,
         { expiresIn: '7d' },
       );
       res.send({ token });
@@ -81,10 +84,10 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        throw new BadRequestError('Указаны некоректные данные');
+        throw new BadRequestError(INCORRECT_ERR);
       }
       if (err.name === 'MongoError' && err.code === 11000) {
-        throw new MongoError('Указанный email занят');
+        throw new MongoError(EMAIL_BUSY_ERR);
       }
     })
     .catch(next);
