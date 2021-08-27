@@ -50,9 +50,6 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-},
-{
-  versionKey: false,
 });
 
 module.exports = mongoose.model('movie', cardSchema);
