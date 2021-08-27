@@ -12,9 +12,9 @@ const allowlist = [
 function corsOptionsDelegate(req, callback) {
   let corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true, credentials: true };
+    corsOptions = { origin: true };
   } else {
-    corsOptions = { origin: false, credentials: true };
+    corsOptions = { origin: false };
   }
   callback(null, corsOptions);
 }
