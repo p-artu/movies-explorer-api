@@ -24,11 +24,11 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params.movied)
     .orFail()
     .then((movie) => {
       if (req.user._id === movie.owner.toString()) {
-        Movie.findByIdAndRemove(req.params.movieId)
+        Movie.findByIdAndRemove(req.params.movied)
           .orFail()
           .then((m) => res.send(m))
           .catch(next);

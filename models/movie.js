@@ -38,7 +38,7 @@ const cardSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  movieId: {
+  movied: {
     type: Number,
     required: true,
   },
