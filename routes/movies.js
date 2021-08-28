@@ -27,14 +27,14 @@ router.post('/movies', celebrate({
     image: Joi.string().required().custom(method),
     trailer: Joi.string().required().custom(method),
     thumbnail: Joi.string().required().custom(method),
-    movied: Joi.number().required(),
+    movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
   }),
 }), createMovie);
-router.delete('/movies/:movied', celebrate({
+router.delete('/movies/:movieId', celebrate({
   params: Joi.object().keys({
-    movied: Joi.string().hex().length(24),
+    movieId: Joi.string().hex().length(24),
   }),
 }), deleteMovie);
 

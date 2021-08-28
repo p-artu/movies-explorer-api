@@ -38,7 +38,7 @@ const cardSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  movied: {
+  movieId: {
     type: Number,
     required: true,
   },
@@ -50,6 +50,9 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+},
+{
+  versionKey: false,
 });
 
 module.exports = mongoose.model('movie', cardSchema);
