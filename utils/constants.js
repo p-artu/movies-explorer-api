@@ -8,6 +8,7 @@ const allowlist = [
   'https://p-artu.movies-explorer.nomoredomains.club',
   'http://p-artu.movies-explorer.nomoredomains.club',
   'http://localhost:3000',
+  'http://gar.oirc40.ru',
 ];
 function corsOptionsDelegate(req, callback) {
   let corsOptions;
